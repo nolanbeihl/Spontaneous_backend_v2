@@ -2,5 +2,6 @@ from django.urls import path
 from spontaneous import views
 
 urlpatterns = [
-    path('', views.ExplorerList.as_view())
+    path('all/', views.get_all),
+    path('', views.explorers),
 ]
