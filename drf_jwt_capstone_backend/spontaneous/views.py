@@ -14,7 +14,7 @@ def get_all(request):
     serializer = ExplorerSerializer(explorers, many=True)
     return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def explorers(request):
     if request.method =='POST':
@@ -23,7 +23,13 @@ def explorers(request):
             serilizer.save(user=request.user)
             return Response(serilizer.data, status=status.HTTP_201_CREATED)
         return Response(serilizer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'GET':
+        explorers = Explorer.objects.filter(user_id=request.user.id)
+        serilizer = ExplorerSerializer(explorers, many=True)
+        return Response(serilizer.data)
         
+
+
 
 
 
